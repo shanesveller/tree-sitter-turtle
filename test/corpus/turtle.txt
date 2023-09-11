@@ -433,3 +433,74 @@ Hex sequences
         (property
           (predicate (iri_reference))
           (object_list (iri_reference)))))))
+
+===============
+Quoted triples
+===============
+
+<< :a :name "Alice" >> :statedBy :bob .
+
+---
+
+(turtle_doc
+  (statement
+    (triples
+      (subject
+        (quoted_triple
+          (qt_subject
+            (prefixed_name
+              (namespace)
+              (pn_local)))
+          (predicate
+            (prefixed_name
+              (namespace)
+              (pn_local)))
+          (qt_object
+            (rdf_literal
+              (string)))))
+      (property_list
+        (property
+          (predicate
+            (prefixed_name
+              (namespace)
+              (pn_local)))
+          (object_list
+            (prefixed_name
+              (namespace)
+              (pn_local))))))))
+
+=================
+Star annotations
+=================
+
+:a :name "Alice" {| :statedBy :bob |} .
+
+---
+
+(turtle_doc
+  (statement
+    (triples
+      (subject
+        (prefixed_name
+          (namespace)
+          (pn_local)))
+      (property_list
+        (property
+          (predicate
+            (prefixed_name
+              (namespace)
+              (pn_local)))
+          (object_list
+            (rdf_literal
+              (string))
+            (annotation
+              (property_list
+                (property
+                  (predicate
+                    (prefixed_name
+                      (namespace)
+                      (pn_local)))
+                  (object_list
+                    (prefixed_name
+                      (namespace)
+                      (pn_local))))))))))))

@@ -240,6 +240,18 @@
           "name": "_object"
         },
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "annotation"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "REPEAT",
           "content": {
             "type": "SEQ",
@@ -251,6 +263,18 @@
               {
                 "type": "SYMBOL",
                 "name": "_object"
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "annotation"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
               }
             ]
           }
@@ -284,6 +308,10 @@
         {
           "type": "SYMBOL",
           "name": "collection"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "quoted_triple"
         }
       ]
     },
@@ -309,6 +337,10 @@
         {
           "type": "SYMBOL",
           "name": "_literal"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "quoted_triple"
         }
       ]
     },
@@ -2159,6 +2191,86 @@
           }
         ]
       }
+    },
+    "quoted_triple": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "<<"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "qt_subject"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "predicate"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "qt_object"
+        },
+        {
+          "type": "STRING",
+          "value": ">>"
+        }
+      ]
+    },
+    "qt_subject": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_iri"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_blank_node"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "quoted_triple"
+        }
+      ]
+    },
+    "qt_object": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_iri"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_blank_node"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_literal"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "quoted_triple"
+        }
+      ]
+    },
+    "annotation": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "{|"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "property_list"
+        },
+        {
+          "type": "STRING",
+          "value": "|}"
+        }
+      ]
     }
   },
   "extras": [

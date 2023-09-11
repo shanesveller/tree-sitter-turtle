@@ -1,5 +1,9 @@
 // [X]  See section "6.5 Grammar" in https://www.w3.org/TR/turtle/#sec-grammar-grammar for
 //      corresponding rule x.
+//
+// RDF-star rules:
+// [*X] Modified from above - https://w3c.github.io/rdf-star/cg-spec/2021-12-17.html#turtle-star-grammar
+// [Xt] New from https://w3c.github.io/rdf-star/cg-spec/2021-12-17.html#turtle-star-grammar
 
 // [26]
 const UCHAR = /(\\u[0-9A-Fa-f]{4}|\\U[0-9A-Fa-f]{8})/
@@ -178,12 +182,14 @@ module.exports = grammar({
       $.object_list,
     ),
 
-    // [8]
+    // [*8]
     object_list: $ => seq(
       $._object,
+      optional($.annotation),
       repeat(seq(
         ',',
-        $._object
+        $._object,
+        optional($.annotation)
       ))
     ),
 
@@ -194,20 +200,22 @@ module.exports = grammar({
       'a'
     ),
 
-    // [10]
+    // [*10]
     subject: $ => choice(
       $._iri,
       $._blank_node,
-      $.collection
+      $.collection,
+      $.quoted_triple
     ),
 
-    // [12]
+    // [*12]
     _object: $ => choice(
       $._iri,
       $._blank_node,
       $.collection,
       $.blank_node_property_list,
-      $._literal
+      $._literal,
+      $.quoted_triple
     ),
 
     // [13]
@@ -447,5 +455,36 @@ module.exports = grammar({
       ))
     )),
 
+    // https://w3c.github.io/rdf-star/cg-spec/2021-12-17.html#turtle-star-grammar
+    // [27t]
+    quoted_triple: $ => seq(
+      '<<',
+      $.qt_subject,
+      $.predicate,
+      $.qt_object,
+      '>>'
+    ),
+
+    // [28t]
+    qt_subject: $ => choice(
+      $._iri,
+      $._blank_node,
+      $.quoted_triple,
+    ),
+
+    // [29t]
+    qt_object: $ => choice(
+      $._iri,
+      $._blank_node,
+      $._literal,
+      $.quoted_triple
+    ),
+
+    // [30t]
+    annotation: $ => seq(
+      '{|',
+      $.property_list,
+      '|}'
+    ),
   }
 })
