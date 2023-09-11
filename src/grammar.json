@@ -289,8 +289,15 @@
           "name": "_iri"
         },
         {
-          "type": "STRING",
-          "value": "a"
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 0,
+            "content": {
+              "type": "STRING",
+              "value": "a"
+            }
+          }
         }
       ]
     },
